@@ -15,6 +15,30 @@ document.querySelector('#demo-video').addEventListener('play',e=>e.target.closes
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('.app-bottom-nav'))closeMenu()},{capture:true});
 document.querySelector('#open-settings').onclick=()=>D.modal('設定・数値の更新について',settingHtml);
 document.querySelector('#demo-top').onclick=featureMap;
-document.querySelector('#demo-note').onclick=()=>D.modal('noteを開く導線の紹介','<p>本体にはnoteへ戻る導線があります。この独立デモでは外部へ移動しません。</p><p>本体へのリンクや接続はありません。</p>');
+document.querySelector('#demo-note').onclick=()=>{
+ D.modal('noteへ戻る方法',`<div class="demo-return-help">
+  <section class="demo-return-help-card demo-return-help-share" aria-label="noteに貼り付けるURL"><label for="demo-return-url">noteに貼り付けるURL</label><input id="demo-return-url" class="demo-return-help-url" type="text" readonly aria-label="noteに貼り付けるURL" spellcheck="false" autocapitalize="off" value="https://mumei-s.github.io/insight-guide/note-card.html" aria-describedby="demo-return-copy-status"><button type="button" class="demo-return-help-copy">貼り付け用URLをコピー</button><p id="demo-return-copy-status" class="demo-return-help-status" role="status" aria-live="polite" aria-atomic="true">コピー後、元のnote編集画面へ切り替えてください。</p></section>
+  <p class="demo-return-help-intro">このデモが別のタブやアプリで開いた場合、端末・ブラウザの「戻る」だけでは元のnoteに戻れないことがあります。編集していた場所に合わせて切り替えてください。</p>
+  <section class="demo-return-help-card" aria-labelledby="return-ios-browser"><h3 id="return-ios-browser">iPhone・iPadのブラウザ</h3><p>Safari・Chrome・Edgeのタブ一覧を開き、元のnote編集画面があるタブを選びます。</p></section>
+  <section class="demo-return-help-card" aria-labelledby="return-ios-app"><h3 id="return-ios-app">iPhone・iPadのnoteアプリ</h3><ul><li><b>ホームボタンなし：</b>画面の下端から上へスワイプし、中央で指を止めます。</li><li><b>ホームボタンあり：</b>ホームボタンをすばやく2回押します。</li></ul><p>表示されたアプリの一覧からnoteを選びます。</p></section>
+  <section class="demo-return-help-card" aria-labelledby="return-android-browser"><h3 id="return-android-browser">Androidのブラウザ</h3><p>Chrome・Edgeなどのタブ一覧を開き、元のnote編集画面があるタブを選びます。</p></section>
+  <section class="demo-return-help-card" aria-labelledby="return-android-app"><h3 id="return-android-app">Androidのnoteアプリ</h3><p>「最近使ったアプリ」を開き、noteを選びます。ジェスチャー操作では下端から上へスワイプして止め、ボタン操作ではアプリ切替ボタンを押します。</p></section>
+  <button type="button" class="demo-return-help-close" data-close-modal>デモへ戻る</button>
+ </div>`);
+ const dialog=document.querySelector('#demo-modal');
+ dialog.classList.add('demo-return-help-modal');
+ const urlField=dialog.querySelector('#demo-return-url'),copyStatus=dialog.querySelector('#demo-return-copy-status');
+ dialog.querySelector('.demo-return-help-copy').onclick=async()=>{
+  try{
+   if(typeof navigator.clipboard?.writeText!=='function')throw new Error('Clipboard unavailable');
+   await navigator.clipboard.writeText(urlField.value);
+   copyStatus.textContent='コピーしました。元のnote編集タブ（アプリの場合はnote）に切り替え、空の行にURLを貼り付けて改行してください。';
+  }catch{
+   urlField.focus({preventScroll:true});urlField.select();urlField.setSelectionRange(0,urlField.value.length);
+   copyStatus.textContent='URL欄を長押ししてコピーしてください';
+  }
+ };
+ dialog.addEventListener('close',()=>dialog.classList.remove('demo-return-help-modal'),{once:true});
+};
 document.querySelector('#close-modal').onclick=()=>document.querySelector('#demo-modal').close();toggle.onclick=()=>{sheet.hidden=!sheet.hidden;toggle.setAttribute('aria-expanded',String(!sheet.hidden));toggle.querySelector('b').textContent=sheet.hidden?'項目を選ぶ':'項目を閉じる'};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu()});window.addEventListener('hashchange',()=>{const v=location.hash.slice(1);if(validView(v)){D.state.view=v;D.render()}});function setLayout(){document.documentElement.dataset.insightLayout=innerWidth<600?'mobile':innerWidth<1000?'tablet':'pc'}setLayout();window.addEventListener('resize',setLayout);const requested=location.hash.slice(1);if(validView(requested))D.state.view=requested;D.render();
 })();

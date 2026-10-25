@@ -14,3 +14,24 @@ html[data-insight-layout] .miv5 .miv5-launcher-item.analysis>button.gear{padding
   .demo-guide summary>span{justify-self:end}
   html[data-insight-layout] .miv5-creator-copy h1{font-size:clamp(14px,4vw,16px)!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.35!important;overflow-wrap:normal;text-wrap:balance}
 }
+
+/* Return instructions stay within the dialog on iOS and Android phone widths. */
+#demo-modal.demo-return-help-modal{max-height:85vh;max-height:calc(100dvh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overflow:auto;overscroll-behavior:contain}
+.demo-return-help-modal .demo-modal-head{gap:12px;padding:16px}
+.demo-return-help-modal .demo-modal-head h2{min-width:0;font-size:18px;line-height:1.4}
+.demo-return-help-modal .demo-modal-head button{flex:0 0 44px;min-width:44px;min-height:44px;width:44px;height:44px;padding:0}
+.demo-return-help-modal #modal-body{padding:16px}
+.demo-return-help{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;min-width:0;max-width:100%;font-size:13px;line-height:1.7;word-break:normal;overflow-wrap:break-word;line-break:strict}
+.demo-return-help p{margin:0;text-wrap:pretty}
+.demo-return-help-intro{color:#c7dbe6}
+.demo-return-help-card{min-width:0;padding:12px;border:1px solid #36566b;border-radius:10px;background:#0c1b27}
+#modal-body .demo-return-help-card h3{margin:0 0 7px;color:#a6e7f5;font-size:14px;line-height:1.5}
+.demo-return-help-card ul{margin:0 0 8px;padding-left:20px}
+.demo-return-help-card li+li{margin-top:7px}
+.demo-return-help-card b{font-weight:650;color:#e2f1f7}
+.demo-return-help-share{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
+.demo-return-help-share label{font-size:14px;font-weight:650;color:#a6e7f5}
+#modal-body .demo-return-help-url{display:block;width:100%;min-width:0;max-width:100%;min-height:44px;margin:0;font-size:16px}
+#modal-body .demo-return-help-copy{width:100%;min-width:0;min-height:44px;margin:0;padding:10px 8px;white-space:nowrap;font-size:13px;line-height:1.5}
+.demo-return-help-status{font-size:12px;color:#c7dbe6;line-height:1.7}
+#modal-body .demo-return-help-close{width:100%;min-width:0;min-height:44px;margin:0;padding:10px 14px;white-space:nowrap;line-height:1.5}

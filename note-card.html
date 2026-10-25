@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja" data-insight-layout="pc">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#071019">
+  <title>INSIGHT｜操作体験デモ</title>
+  <meta name="description" content="INSIGHTの画面構成に沿って、履歴・交流管理・4つの分析を架空データで体験できます。日本語字幕付きの操作動画も掲載した、ログイン不要の独立した紹介デモです。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="INSIGHT｜操作体験デモ">
+  <meta property="og:description" content="履歴・交流管理・分析を架空データで体験。拡張導入後の流れも動画で確認できます。">
+  <meta property="og:url" content="https://mumei-s.github.io/insight-guide/note-card.html">
+  <meta property="og:image" content="https://mumei-s.github.io/insight-guide/media/og-insight-chibi-v8.jpg">
+  <meta property="og:image:secure_url" content="https://mumei-s.github.io/insight-guide/media/og-insight-chibi-v8.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="INSIGHT 操作体験デモ">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="note:card" content="summary_large_image">
+  <meta name="twitter:title" content="INSIGHT｜操作体験デモ">
+  <meta name="twitter:description" content="履歴・交流管理・分析を架空データで体験。拡張導入後の流れも動画で確認できます。">
+  <meta name="twitter:image" content="https://mumei-s.github.io/insight-guide/media/og-insight-chibi-v8.jpg">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="original-ui.css">
+  <link rel="stylesheet" href="conversation-ui.css">
+  <link rel="stylesheet" href="analytics-social-ui.css">
+  <link rel="stylesheet" href="normal-analysis.css">
+  <link rel="stylesheet" href="demo.css">
+  <link rel="stylesheet" href="social-extra.css">
+  <link rel="stylesheet" href="conversation-extra.css">
+  <link rel="stylesheet" href="demo-polish.css">
+  <link rel="stylesheet" href="video-cta.css">
+  <link rel="stylesheet" href="qa-fixes.css?v=8">
+</head>
+<body>
+  <header class="demo-topbar">
+    <a class="demo-wordmark" href="#likes" aria-label="スキ履歴へ">INSIGHT <span>FEATURE DEMO</span></a>
+    <div class="demo-topbar-tools">
+      <b>紹介用デモ・架空データ</b>
+      <div class="demo-topbar-buttons">
+        <button id="open-video" aria-expanded="false" aria-controls="demo-video-panel">▶ 操作動画を見る</button>
+        <button id="open-about">このデモについて</button>
+      </div>
+    </div>
+  </header>
+  <div class="app-route-shell is-member">
+    <div class="miv5 mode-normal" id="replica">
+      <section class="miv5-creator-first" data-motion="off" aria-label="デモのクリエイター">
+        <div class="miv5-hero-signature" aria-hidden="true"><strong><span>機能体験 DEMO</span><span>INSIGHT</span></strong><i></i></div>
+        <div class="miv5-creator-avatar"><span>D</span></div>
+        <div class="miv5-creator-copy"><h1>サンプルクリエイター</h1><span class="demo-creator-id">@demo_creator · 架空のアカウント</span></div>
+        <div class="miv5-creator-actions"><div class="miv5-creator-brand"><span>◇</span><small>ISOLATED DEMO</small></div><button id="demo-account">アカウント切替</button></div>
+      </section>
+      <section class="miv5-command-stage main">
+        <nav class="miv5-launcher" aria-label="INSIGHTランチャー">
+          <button class="miv5-launcher-item caution" id="open-notice"><span class="icon">⚠</span><b>注意</b></button>
+          <div class="miv5-launcher-item analysis"><button data-view="analysis"><span class="icon">📊</span><b>分析</b></button><button class="gear" id="open-settings" aria-label="分析設定の紹介">⚙</button></div>
+          <div class="miv5-launcher-item notification"><button data-view="notifications"><span class="icon">🔔</span><b>本人通知</b></button></div>
+        </nav>
+      </section>
+      <div class="demo-layout">
+        <section class="demo-video-callout" aria-label="操作動画の紹介">
+          <button class="demo-video-cta" data-open-video aria-expanded="false" aria-controls="demo-video-panel">
+            <span class="demo-video-cta-icon" aria-hidden="true">▶</span>
+            <span class="demo-video-cta-copy"><strong>操作動画でINSIGHTを見る</strong><small>字幕付き・約50秒</small></span>
+            <span class="demo-video-cta-arrow" aria-hidden="true">→</span>
+          </button>
+        </section>
+        <details class="demo-video-panel" id="demo-video-panel">
+          <summary><strong>▶ 操作動画で見る</strong><span>字幕付き・音声なし</span></summary>
+          <div class="demo-video-body">
+            <div class="demo-video-frame is-preview">
+              <video id="demo-video" controls playsinline preload="metadata" poster="media/og-insight-chibi-v8.jpg" aria-label="INSIGHTの操作紹介。紹介用デモ・架空データ">
+                <source src="media/insight-demo-quick-v8.mp4" type="video/mp4">
+                動画を別画面で見る場合は、下の「動画だけを開く」からご覧ください。
+              </video>
+            </div>
+            <div class="demo-video-copy">
+              <h2>探す、振り返る、交流を整理する。</h2>
+              <p>拡張導入後のnote上の導線を紹介用に再現したあと、このページの架空データを使い、履歴の絞り込み、対応済み、ランキング、会話の確認、グループ管理、分析の切り替えを操作しています。</p>
+              <p class="demo-video-note">紹介用デモ・架空データ。字幕付き・音声なし。</p>
+              <a class="demo-video-download" href="media/insight-demo-quick-v8.mp4" target="_blank" rel="noopener">▶ 動画だけを開く</a>
+              <p class="demo-video-hint">動画の下では、同じ画面を自分で操作できます。</p>
+            </div>
+          </div>
+        </details>
+        <aside class="demo-guide" id="feature-guide" aria-label="機能ガイド"></aside>
+        <main class="demo-main" id="view-root" tabindex="-1"></main>
+      </div>
+    </div>
+  </div>
+  <nav class="app-bottom-nav has-items" aria-label="メインナビゲーション">
+    <button class="app-bottom-item-toggle" id="toggle-menu" aria-expanded="false" aria-controls="item-sheet"><span>▦</span><b>項目を選ぶ</b><small id="current-item">現在：スキ履歴</small></button>
+    <div class="app-bottom-item-sheet" id="item-sheet" hidden></div>
+    <button id="demo-top"><span>⌂</span><b>TOP</b></button>
+    <button class="active" data-view="likes"><small class="app-main-label">メイン</small><span>◫</span><b>INSIGHT</b></button>
+    <button class="note-exit" id="demo-note"><span>↗</span><b>noteへ</b></button>
+  </nav>
+  <dialog id="demo-modal" aria-labelledby="modal-title">
+    <div class="demo-modal-head"><h2 id="modal-title"></h2><button id="close-modal" aria-label="説明を閉じる">×</button></div>
+    <div id="modal-body"></div>
+    <div class="demo-modal-footer">紹介用デモです。外部接続・データ送信は行いません。</div>
+  </dialog>
+  <div class="demo-toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">この紹介デモはJavaScriptを使用します。</p></noscript>
+  <script src="demo-core.js"></script>
+  <script src="history.js"></script>
+  <script src="analysis.js"></script>
+  <script src="conversations.js"></script>
+  <script src="social.js"></script>
+  <script src="boot.js?v=8"></script>
+</body>
+</html>
