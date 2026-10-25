@@ -1,12 +1,43 @@
 (()=>{'use strict';const D=window.Demo,E=D.escape,items=[['likes','スキ履歴'],['supporters','スキ順位'],['comments','コメント'],['commentRanking','コメント順位'],['magazines','マガジン'],['favorites','お気に入り'],['social','フォロー'],['notifications','本人通知'],['dm','DM'],['articles','記事']],labels=Object.fromEntries([...items,['analysis','分析']]);const validView=v=>Object.hasOwn(window.DemoViews,v)&&typeof window.DemoViews[v]?.render==='function';const root=document.querySelector('#view-root'),sheet=document.querySelector('#item-sheet'),toggle=document.querySelector('#toggle-menu');let guideOpen=false,rendering=false,renderPending=false;
+// Keep a finite, reload-safe exit entry only when a same-tab note history is not known.
+// A new browser/app cannot recover another app's editor; the fallback is note's web home.
+const navKey='__insightReturnV1';
+function safeNoteUrl(value){try{const u=new URL(value);return u.protocol==='https:'&&['note.com','editor.note.com'].includes(u.hostname)&&!u.username&&!u.password&&(!u.port||u.port==='443')?u.href:null}catch{return null}}
+const storedNav=history.state?.[navKey];
+const savedNav=storedNav&&['view','exit'].includes(storedNav.kind)&&Number.isInteger(storedNav.depth)&&storedNav.depth>=0&&storedNav.depth<history.length&&typeof storedNav.guard==='boolean'?storedNav:null;
+let nav=savedNav&&savedNav.kind==='view'
+ ? {...savedNav,returnUrl:safeNoteUrl(savedNav.returnUrl)||'https://note.com/'}
+ : {kind:'view',depth:0,guard:!(history.length>1&&safeNoteUrl(document.referrer)),returnUrl:safeNoteUrl(document.referrer)||'https://note.com/'};
+let leaving=false;
+const navState=value=>({...history.state,[navKey]:value});
+if(savedNav?.kind==='exit'){location.replace(safeNoteUrl(savedNav.returnUrl)||'https://note.com/')}
+if(!savedNav){
+ if(nav.guard){history.replaceState(navState({...nav,kind:'exit'}),'');history.pushState(navState(nav),'')}
+ else history.replaceState(navState(nav),'');
+}
+function returnToNote(){
+ if(leaving)return;leaving=true;
+ history.go(-(nav.depth+1));
+}
+function restoreView(){
+ const v=location.hash.slice(1);D.state.view=validView(v)?v:'likes';
+ closeMenu();document.querySelector('#demo-modal').close();document.querySelector('#demo-video-panel').open=false;D.render();
+}
+window.addEventListener('popstate',e=>{
+ const state=e.state?.[navKey];
+ if(state?.kind==='exit'){leaving=true;location.replace(safeNoteUrl(state.returnUrl)||'https://note.com/');return}
+ if(!state){nav={...nav,depth:nav.depth+1};history.replaceState(navState(nav),'');restoreView();return}
+ if(state?.kind==='view'){nav={...state,returnUrl:safeNoteUrl(state.returnUrl)||'https://note.com/'};leaving=false;restoreView()}
+});
+window.addEventListener('pageshow',()=>{leaving=false});
 function closeMenu(){sheet.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.querySelector('b').textContent='項目を選ぶ'}
 function featureMap(){D.modal('INSIGHTの機能一覧',`<p>項目を選ぶと、架空データでその画面を開きます。</p><div class="demo-feature-map">${[...items,['analysis','4つの分析']].map(([id,label])=>`<button data-go="${id}"><b>${label}</b><small>${E(window.DemoViews[id]?.guide?.title||label)}</small></button>`).join('')}</div><p>これは独立した機能紹介デモです。本体のTOPや実際のアカウント画面へは移動しません。</p>`)}
 function renderView(){const view=window.DemoViews[D.state.view];if(!view){root.innerHTML='<p>この画面を準備しています。</p>';return}const g=view.guide||{};root.innerHTML=view.render();view.bind?.(root);document.querySelector('#feature-guide').innerHTML=`<details ${guideOpen?'open':''}><summary><b>◈ ${E(g.title||labels[D.state.view])}の機能ガイド</b><span>使い方を見る ▾</span></summary><div class="demo-guide-body"><p>${E(g.body||'')}</p><ol>${(g.steps||[]).map(t=>`<li>${E(t)}</li>`).join('')}</ol>${g.note?`<small>${E(g.note)}</small>`:''}</div></details>`;document.querySelector('#feature-guide details').ontoggle=e=>{guideOpen=e.target.open};sheet.innerHTML=items.map(([id,label])=>`<button data-view="${id}" class="${D.state.view===id?'active':''}" aria-current="${D.state.view===id?'page':'false'}">${label}</button>`).join('');document.querySelector('#current-item').textContent='現在：'+labels[D.state.view];document.title=labels[D.state.view]+'｜INSIGHT 紹介デモ';document.querySelector('#replica').className='miv5 mode-'+(['comments','favorites','social','notifications','analysis'].includes(D.state.view)?D.state.view:'normal');document.querySelectorAll('.miv5-launcher-item').forEach(e=>e.classList.toggle('active',e.classList.contains(D.state.view==='analysis'?'analysis':D.state.view==='notifications'?'notification':'__none')));}
 D.render=()=>{if(rendering){renderPending=true;return}rendering=true;let completed=false;try{renderView();completed=true}finally{rendering=false;if(renderPending){renderPending=false;if(completed)queueMicrotask(()=>D.render())}}};
-D.go=view=>{if(!validView(view))return;D.state.view=view;closeMenu();document.querySelector('#demo-video-panel').open=false;D.render();history.replaceState(null,'','#'+view);document.querySelector('#demo-modal').close();root.focus({preventScroll:true});window.scrollTo({top:0,behavior:'auto'})};
+D.go=view=>{if(!validView(view))return;if(view!==D.state.view){nav={...nav,depth:nav.depth+1};history.pushState(navState(nav),'','#'+view)}D.state.view=view;closeMenu();document.querySelector('#demo-video-panel').open=false;D.render();document.querySelector('#demo-modal').close();root.focus({preventScroll:true});window.scrollTo({top:0,behavior:'auto'})};
 const settingHtml='<p>本体では、機能ごとに読み込み・保存先の状態・対応ブラウザなどを確認する設定画面があります。</p><ol><li>会員認証と利用条件を確認</li><li>必要に応じて対応するReader・連携を設定</li><li>note側で明示的に読み込み、保存状態を確認</li></ol><p>このデモには認証・インストール・接続・送信の機能はありません。説明を読むだけで連携が有効になることもありません。</p>';
-document.addEventListener('click',e=>{const el=e.target.closest('button,a');if(!el)return;if(el.hasAttribute('data-open-video')){e.preventDefault();document.querySelector('#open-video').click()}else if(el.dataset.view){e.preventDefault();D.go(el.dataset.view)}else if(el.dataset.go){e.preventDefault();D.go(el.dataset.go)}else if(el.hasAttribute('data-settings')){e.preventDefault();D.modal('設定・数値の更新について',settingHtml)}else if(el.dataset.simulate){e.preventDefault();D.modal(el.dataset.simulate,`<p>本体の「${E(el.dataset.simulate)}」操作を紹介するボタンです。</p><p>紹介デモでは、通信や保存先の更新は行いません。画面の架空データはそのままです。</p>`)}else if(el.dataset.explain==='profile'){e.preventDefault();D.modal('プロフィールを確認する機能','<p>本体では相手のプロフィールを確認できます。このデモの人物は架空で、外部のプロフィールへは移動しません。</p>')}else if(el.dataset.article){e.preventDefault();const a=D.data.articles.find(a=>a.id===el.dataset.article);D.modal(a?.title||'架空の記事',`<p>本体では記事を開いて内容を確認できます。このデモは外部へ移動せず、架空の記事情報だけを表示します。</p>${a?`<p>公開日：${a.date}<br>保存時点の累計：スキ ${a.likes}件 ／ コメント ${a.comments}件</p>`:''}<p>人物・記事名・内容・数値はすべてサンプルです。</p>`)}else if(el.dataset.closeModal!==undefined||el.dataset.modalClose!==undefined){document.querySelector('#demo-modal').close()}});
-document.querySelector('#open-about').onclick=()=>D.modal('このデモについて','<p>INSIGHTの機能を、実際の画面構成・色・項目に沿って紹介する独立した体験用ページです。人物、記事、コメント、通知、DM、数値はすべて架空です。</p><p>絞り込み、展開、並べ替え、グループ分けなどはデモ内で操作できます。設定・読取・同期・送信・インストールは行いません。</p><p>本体・外部プロフィール・noteへのリンクはありません。デモ内の変更は再読込でリセットされます。収益の金額は表示しません。</p><button data-close-modal>閉じる</button>');
+document.addEventListener('click',e=>{const el=e.target.closest('button,a');if(!el)return;if(el.hasAttribute('data-return-help')){e.preventDefault();showReturnHelp()}else if(el.hasAttribute('data-open-video')){e.preventDefault();document.querySelector('#open-video').click()}else if(el.dataset.view){e.preventDefault();D.go(el.dataset.view)}else if(el.dataset.go){e.preventDefault();D.go(el.dataset.go)}else if(el.hasAttribute('data-settings')){e.preventDefault();D.modal('設定・数値の更新について',settingHtml)}else if(el.dataset.simulate){e.preventDefault();D.modal(el.dataset.simulate,`<p>本体の「${E(el.dataset.simulate)}」操作を紹介するボタンです。</p><p>紹介デモでは、通信や保存先の更新は行いません。画面の架空データはそのままです。</p>`)}else if(el.dataset.explain==='profile'){e.preventDefault();D.modal('プロフィールを確認する機能','<p>本体では相手のプロフィールを確認できます。このデモの人物は架空で、外部のプロフィールへは移動しません。</p>')}else if(el.dataset.article){e.preventDefault();const a=D.data.articles.find(a=>a.id===el.dataset.article);D.modal(a?.title||'架空の記事',`<p>本体では記事を開いて内容を確認できます。このデモは外部へ移動せず、架空の記事情報だけを表示します。</p>${a?`<p>公開日：${a.date}<br>保存時点の累計：スキ ${a.likes}件 ／ コメント ${a.comments}件</p>`:''}<p>人物・記事名・内容・数値はすべてサンプルです。</p>`)}else if(el.dataset.closeModal!==undefined||el.dataset.modalClose!==undefined){document.querySelector('#demo-modal').close()}});
+document.querySelector('#open-about').onclick=()=>D.modal('このデモについて','<p>INSIGHTの機能を、実際の画面構成・色・項目に沿って紹介する独立した体験用ページです。人物、記事、コメント、通知、DM、数値はすべて架空です。</p><p>絞り込み、展開、並べ替え、グループ分けなどはデモ内で操作できます。設定・読取・同期・送信・インストールは行いません。</p><p>本体・外部プロフィールへのリンクはありません。「noteへ」だけは元のnote画面、またはnoteのWebページへ移動します。デモ内の変更は再読込でリセットされます。収益の金額は表示しません。</p><button id="demo-return-help" data-return-help>戻り方・URLコピー</button><button data-close-modal>閉じる</button>');
 document.querySelector('#open-notice').onclick=()=>D.modal('データの見方・注意','<p>公式の集計値と、取得・保存できた人物別の履歴は集計範囲が異なります。未取得の期間を実際の「0」とは扱いません。</p><p>初手コメントは返信ではない親コメント。最初に書き込んだ人の順位ではありません。フォロー照合では確定・候補・未確認を分けます。</p><p>本ページの表示はすべて紹介用の架空データです。実際の網羅性・成果・リアルタイム性を保証するものではありません。</p>');
 document.querySelector('#demo-account').onclick=()=>D.modal('アカウント切替','<p>本体には利用する本人アカウントを切り替える導線があります。このデモは架空のアカウントに固定されており、ログインや実アカウントへの接続はできません。</p>');
 document.querySelector('#open-video').onclick=()=>{closeMenu();const panel=document.querySelector('#demo-video-panel');panel.open=true;panel.scrollIntoView({block:'start',behavior:'auto'});panel.querySelector('video').focus({preventScroll:true})};
@@ -15,10 +46,11 @@ document.querySelector('#demo-video').addEventListener('play',e=>e.target.closes
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('.app-bottom-nav'))closeMenu()},{capture:true});
 document.querySelector('#open-settings').onclick=()=>D.modal('設定・数値の更新について',settingHtml);
 document.querySelector('#demo-top').onclick=featureMap;
-document.querySelector('#demo-note').onclick=()=>{
+document.querySelector('#demo-note').onclick=returnToNote;
+function showReturnHelp(){
  D.modal('noteへ戻る方法',`<div class="demo-return-help">
-  <section class="demo-return-help-card demo-return-help-share" aria-label="noteに貼り付けるURL"><label for="demo-return-url">noteに貼り付けるURL</label><input id="demo-return-url" class="demo-return-help-url" type="text" readonly aria-label="noteに貼り付けるURL" spellcheck="false" autocapitalize="off" value="https://mumei-s.github.io/insight-guide/note-card.html" aria-describedby="demo-return-copy-status"><button type="button" class="demo-return-help-copy">貼り付け用URLをコピー</button><p id="demo-return-copy-status" class="demo-return-help-status" role="status" aria-live="polite" aria-atomic="true">コピー後、元のnote編集画面へ切り替えてください。</p></section>
-  <p class="demo-return-help-intro">このデモが別のタブやアプリで開いた場合、端末・ブラウザの「戻る」だけでは元のnoteに戻れないことがあります。編集していた場所に合わせて切り替えてください。</p>
+  <section class="demo-return-help-card demo-return-help-share" aria-label="noteに貼り付けるURL"><label for="demo-return-url">noteに貼り付けるURL</label><input id="demo-return-url" class="demo-return-help-url" type="text" readonly aria-label="noteに貼り付けるURL" spellcheck="false" autocapitalize="off" value="https://mumei-s.github.io/insight-guide/note-card-v9.html" aria-describedby="demo-return-copy-status"><button type="button" class="demo-return-help-copy">貼り付け用URLをコピー</button><p id="demo-return-copy-status" class="demo-return-help-status" role="status" aria-live="polite" aria-atomic="true">コピー後、元のnote編集画面へ切り替えてください。</p></section>
+  <p class="demo-return-help-intro">「noteへ」は元のnote履歴へ戻ります。元の履歴がない場合はnoteのWebページを開きます。別アプリで編集中の記事を自動で復元する機能ではありません。</p><p class="demo-return-help-intro">このデモが別のタブやアプリで開いた場合、端末・ブラウザの「戻る」だけでは元のnoteに戻れないことがあります。編集していた場所に合わせて切り替えてください。</p>
   <section class="demo-return-help-card" aria-labelledby="return-ios-browser"><h3 id="return-ios-browser">iPhone・iPadのブラウザ</h3><p>Safari・Chrome・Edgeのタブ一覧を開き、元のnote編集画面があるタブを選びます。</p></section>
   <section class="demo-return-help-card" aria-labelledby="return-ios-app"><h3 id="return-ios-app">iPhone・iPadのnoteアプリ</h3><ul><li><b>ホームボタンなし：</b>画面の下端から上へスワイプし、中央で指を止めます。</li><li><b>ホームボタンあり：</b>ホームボタンをすばやく2回押します。</li></ul><p>表示されたアプリの一覧からnoteを選びます。</p></section>
   <section class="demo-return-help-card" aria-labelledby="return-android-browser"><h3 id="return-android-browser">Androidのブラウザ</h3><p>Chrome・Edgeなどのタブ一覧を開き、元のnote編集画面があるタブを選びます。</p></section>
