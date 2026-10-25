@@ -1,0 +1,16 @@
+/* Only local demo affordances; the production-derived layout remains unchanged. */
+.conversation-demo-note{margin:7px 0;color:#a2c5d9;font-size:11px;line-height:1.55;overflow-wrap:anywhere}
+:is(.micf,.minf,.miff,.mioc) a[role=button]{cursor:pointer}
+:is(.micf,.minf,.miff,.mioc) a[role=button]:focus-visible{outline:2px solid #a1ecff;outline-offset:3px;border-radius:4px}
+.miff-articles .conversation-thumb{display:grid;place-items:center;color:#daf5ff;font-size:26px;background:linear-gradient(135deg,#1a5070,#123044)}
+.miff-articles .conversation-thumb.green{background:linear-gradient(135deg,#245b4b,#113b38)}
+.miff-articles .conversation-thumb.purple{background:linear-gradient(135deg,#4a3c70,#232745)}
+.miff-articles .conversation-thumb.orange{background:linear-gradient(135deg,#715435,#443027)}
+[data-conversation-modal]{display:grid;gap:12px}
+[data-conversation-modal] label{display:grid;gap:8px}
+[data-conversation-modal] input{min-height:42px;padding:10px;border:1px solid #54748b;border-radius:8px;background:#0a1a27;color:#eef8ff;width:100%;box-sizing:border-box}
+.conversation-modal-actions{display:flex;gap:8px;justify-content:flex-end}
+.conversation-modal-actions button{min-height:40px;padding:8px 14px;border:1px solid #54748b;border-radius:8px;background:#153448;color:#eef8ff;cursor:pointer}
+[data-conversation-error]{color:#ffc6c6;font-size:12px}
+.micf-tools input[type=date]{color-scheme:dark}
+@media(max-width:480px){.micf-tools>select{width:100%;min-width:0}.micf-tools>input{width:100%;min-width:0}.conversation-modal-actions{flex-wrap:wrap}}
