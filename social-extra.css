@@ -1,0 +1,30 @@
+/* Inert button replacements for the current source's external links. */
+.demo-local-note{font-size:10px;line-height:1.6;color:#a6bacb;padding:7px 9px;border:1px solid #314a5e;border-radius:8px;background:#0c1c28}
+.demo-link{display:inline-block!important;width:auto!important;min-height:28px!important;border:0!important;background:transparent!important;padding:3px 0!important;box-shadow:none!important;color:#8feaff!important;font:inherit;font-size:10px!important;text-align:left!important;cursor:pointer}
+.demo-link:hover{text-decoration:underline}
+.demo-profile-button{border:0;background:transparent;padding:0;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.mimag .mimag-owner.demo-profile-button{width:100%;display:flex;justify-content:flex-start}
+.mimag-owner.demo-profile-button>span.miu-avatar{display:grid;place-items:center;flex:none}
+.miu-member-faces>.demo-profile-button{display:block;border-radius:50%}
+.miu-member-faces>.demo-profile-button:hover,.demo-profile-button:focus-visible{outline:2px solid #7ce5f5;outline-offset:3px}
+.miu-mag-articles .demo-article-card{min-width:0;overflow:hidden;border:1px solid #26384b;border-radius:9px;background:#09111a;padding:8px;display:grid;gap:3px;color:#e5eef7;text-align:left;font:inherit;cursor:pointer}
+.miu-mag-articles .demo-article-card b{font-size:10px;overflow-wrap:anywhere}
+.miu-mag-articles .demo-article-card:hover{border-color:#6ab9ce;background:#102633}
+.midm-room-head .demo-link{display:block!important;font-size:9px!important;min-height:20px!important}
+.midm-control-main .demo-dm-open{border-color:#4d9a72;background:#0d2a1c;color:#dcffe8}
+.midm-message .demo-link{font-size:9px!important}
+.miu-self-article-grid>.demo-self-article{display:grid;grid-template-columns:120px minmax(0,1fr);gap:9px;border:1px solid #2a3d51;border-radius:12px;background:#0b141d;padding:8px;color:#e5eef7;overflow:hidden;text-align:left;font:inherit;cursor:pointer}
+.miu-self-article-grid>.demo-self-article:hover{border-color:#6bc6df;background:#0f2130}
+.miu-self-article-grid>.demo-self-article>div{min-width:0;display:grid;gap:4px;align-content:start}
+.demo-self-article .demo-thumb{position:relative;display:grid;place-items:center;overflow:hidden}
+.demo-thumb:before{content:"";position:absolute;width:80px;height:80px;border:1px solid #ffffff30;border-radius:50%;transform:translate(30px,-15px)}
+.demo-thumb:after{content:"";position:absolute;width:100px;height:70px;border:1px solid #ffffff20;transform:rotate(-27deg) translate(-25px,40px)}
+.demo-self-article .demo-thumb>span{position:relative;z-index:1;font:700 10px/1.2 system-ui;letter-spacing:.16em;color:#e7f2f8}
+.demo-thumb-0{background:linear-gradient(140deg,#4b574b,#1a2e2c)}
+.demo-thumb-1{background:linear-gradient(140deg,#6b4b3c,#332a2a)}
+.demo-thumb-2{background:linear-gradient(140deg,#465773,#172a41)}
+.demo-thumb-3{background:linear-gradient(140deg,#6a5841,#302c22)}
+.demo-thumb-4{background:linear-gradient(140deg,#66546d,#2c2636)}
+.demo-thumb-5{background:linear-gradient(140deg,#3e6767,#142e36)}
+@media(max-width:760px){.miu-self-article-grid>.demo-self-article{grid-template-columns:104px minmax(0,1fr)}}
+@media(max-width:480px){.mis2-social-root>.mis2-viewtabs{grid-template-columns:1fr 1fr}.mis2-window{flex-wrap:wrap}.mis2-comparison-status .demo-link{min-height:36px!important}.mis2-body>div{flex-wrap:wrap}.mimag .miu-mag-actions{align-items:center}}
