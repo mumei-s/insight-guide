@@ -1,0 +1,13 @@
+/* Keep the notification pager readable at the smallest supported phone width. */
+.demo-main .minf-pager{gap:8px;flex-wrap:nowrap}
+.demo-main .minf-pager>button{flex:0 0 auto;white-space:nowrap;min-width:68px;min-height:38px;padding:7px 10px;line-height:1.25}
+.demo-main .minf-pager>label{min-width:0;gap:5px}
+.demo-main .minf-pager select{width:auto;min-width:64px;max-width:100%;min-height:38px}
+
+/* Give long guide titles their own line and retain the full sample account name. */
+@media(max-width:420px){
+  .demo-guide summary{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+  .demo-guide summary b{min-width:0;line-height:1.5;text-wrap:balance}
+  .demo-guide summary>span{justify-self:end}
+  html[data-insight-layout] .miv5-creator-copy h1{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.35!important;overflow-wrap:normal;text-wrap:balance}
+}

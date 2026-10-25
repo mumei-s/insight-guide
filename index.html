@@ -24,11 +24,15 @@
   <meta name="twitter:image" content="https://mumei-s.github.io/insight-guide/media/og-insight-note.jpg">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="original-ui.css">
+  <link rel="stylesheet" href="conversation-ui.css">
+  <link rel="stylesheet" href="analytics-social-ui.css">
   <link rel="stylesheet" href="normal-analysis.css">
   <link rel="stylesheet" href="demo.css">
   <link rel="stylesheet" href="social-extra.css">
   <link rel="stylesheet" href="conversation-extra.css">
   <link rel="stylesheet" href="demo-polish.css">
+  <link rel="stylesheet" href="video-cta.css">
+  <link rel="stylesheet" href="qa-fixes.css">
 </head>
 <body>
   <header class="demo-topbar">
@@ -36,7 +40,7 @@
     <div class="demo-topbar-tools">
       <b>紹介用デモ・架空データ</b>
       <div class="demo-topbar-buttons">
-        <button id="open-video" aria-expanded="false" aria-controls="demo-video-panel">▶ 操作動画</button>
+        <button id="open-video" aria-expanded="false" aria-controls="demo-video-panel">▶ 操作動画を見る</button>
         <button id="open-about">このデモについて</button>
       </div>
     </div>
@@ -57,6 +61,13 @@
         </nav>
       </section>
       <div class="demo-layout">
+        <section class="demo-video-callout" aria-label="操作動画の紹介">
+          <button class="demo-video-cta" data-open-video aria-expanded="false" aria-controls="demo-video-panel">
+            <span class="demo-video-cta-icon" aria-hidden="true">▶</span>
+            <span class="demo-video-cta-copy"><strong>操作動画でINSIGHTを見る</strong><small>字幕付き・約1分</small></span>
+            <span class="demo-video-cta-arrow" aria-hidden="true">→</span>
+          </button>
+        </section>
         <details class="demo-video-panel" id="demo-video-panel">
           <summary><strong>▶ 操作動画で見る</strong><span>字幕付き・音声なし</span></summary>
           <div class="demo-video-body">

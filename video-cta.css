@@ -1,0 +1,47 @@
+/* Clear video entry points; all playback stays inside the independent demo. */
+.demo-topbar #open-video{
+  appearance:none;-webkit-appearance:none;
+  min-height:44px;padding:9px 15px;border:1px solid #92eaf5;border-radius:10px;
+  background:linear-gradient(140deg,#1d6c7f,#124352);color:#f1fdff;
+  box-shadow:inset 0 1px #d9ffff4d,0 0 18px #49d4ea26;
+  font-size:13px;font-weight:850;line-height:1.3;white-space:nowrap;
+}
+.demo-topbar #open-video:hover,.demo-topbar #open-video:focus-visible{
+  background:linear-gradient(140deg,#287e90,#19566a);border-color:#d0faff;
+}
+.demo-video-callout{margin:0 0 12px;min-width:0}
+.demo-video-callout .demo-video-cta{
+  appearance:none;-webkit-appearance:none;
+  display:flex;align-items:center;gap:14px;width:100%;min-width:0;min-height:82px;
+  padding:15px 20px;border:1px solid #69bcca;border-radius:14px;
+  background:linear-gradient(115deg,#143b49,#0e2735 66%,#182d34);
+  color:#edfcff;text-align:left;
+  box-shadow:inset 0 1px #d3faff26,0 6px 24px #0003;
+}
+.demo-video-callout .demo-video-cta:hover,.demo-video-callout .demo-video-cta:focus-visible{
+  border-color:#b3edf4;background:linear-gradient(115deg,#1a4c5a,#123340 66%,#253c40);
+}
+.demo-video-cta-icon{
+  display:grid;place-items:center;flex:0 0 46px;width:46px;height:46px;padding-left:3px;
+  border:1px solid #edd49a;border-radius:50%;
+  background:linear-gradient(145deg,#f0d99e,#b99853);color:#132b32;
+  box-shadow:0 0 20px #d6c48b24,inset 0 1px #fff9;font-size:19px;line-height:1;
+}
+.demo-video-cta-copy{display:grid;gap:5px;min-width:0;flex:1}
+.demo-video-cta-copy strong{font-size:18px;font-weight:800;line-height:1.4;white-space:nowrap}
+.demo-video-cta-copy small{font-size:12px;line-height:1.4;color:#b1d6dd}
+.demo-video-cta-arrow{flex:none;font-size:25px;line-height:1;color:#e7d7aa}
+@media(max-width:759px){
+  .demo-topbar #open-video{min-height:42px;font-size:11px;padding:8px 11px}
+  .demo-video-callout .demo-video-cta{min-height:74px;padding:12px;gap:11px;border-radius:12px}
+  .demo-video-cta-icon{flex-basis:40px;width:40px;height:40px;font-size:17px}
+  .demo-video-cta-copy{gap:3px}
+  .demo-video-cta-copy strong{font-size:15px;letter-spacing:0}
+  .demo-video-cta-copy small{font-size:11px}
+  .demo-video-cta-arrow{font-size:22px}
+}
+@media(max-width:359px){
+  .demo-video-callout .demo-video-cta{gap:8px;padding:10px}
+  .demo-video-cta-copy strong{font-size:13px}
+  .demo-video-cta-icon{flex-basis:36px;width:36px;height:36px}
+}
