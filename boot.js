@@ -11,6 +11,7 @@ document.querySelector('#open-notice').onclick=()=>D.modal('データの見方�
 document.querySelector('#demo-account').onclick=()=>D.modal('アカウント切替','<p>本体には利用する本人アカウントを切り替える導線があります。このデモは架空のアカウントに固定されており、ログインや実アカウントへの接続はできません。</p>');
 document.querySelector('#open-video').onclick=()=>{closeMenu();const panel=document.querySelector('#demo-video-panel');panel.open=true;panel.scrollIntoView({block:'start',behavior:'auto'});panel.querySelector('video').focus({preventScroll:true})};
 document.querySelector('#demo-video-panel').addEventListener('toggle',e=>{document.querySelectorAll('#open-video,[data-open-video]').forEach(button=>button.setAttribute('aria-expanded',String(e.target.open)));if(!e.target.open)document.querySelector('#demo-video').pause()});
+document.querySelector('#demo-video').addEventListener('play',e=>e.target.closest('.demo-video-frame').classList.remove('is-preview'));
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('.app-bottom-nav'))closeMenu()},{capture:true});
 document.querySelector('#open-settings').onclick=()=>D.modal('設定・数値の更新について',settingHtml);
 document.querySelector('#demo-top').onclick=featureMap;
