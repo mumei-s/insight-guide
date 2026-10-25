@@ -1,5 +1,5 @@
 /* Clear video entry points; all playback stays inside the independent demo. */
-.demo-video-frame.is-preview video{aspect-ratio:1730/909;object-fit:contain}
+.demo-video-frame.is-preview video{aspect-ratio:1200/630;object-fit:contain}
 .demo-topbar #open-video{
   appearance:none;-webkit-appearance:none;
   min-height:44px;padding:9px 15px;border:1px solid #92eaf5;border-radius:10px;
