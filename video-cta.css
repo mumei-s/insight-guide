@@ -56,3 +56,10 @@
 .demo-video-followup a{color:#a8e9ee;font-weight:800;text-underline-offset:3px}
 @media(max-width:480px){.demo-join-inline{padding:8px 10px;gap:7px}.demo-join-inline strong,.demo-join-inline>span{font-size:11px}}
 @media(max-width:350px){.demo-join-inline{flex-direction:column;align-items:flex-start}.demo-join-inline>span{text-align:left}}
+
+/* Conversion prompt after the interactive demo; outside all controls and overlays. */
+.demo-journey-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:19px 0 23px;padding:18px 20px;border:1px solid #456178;border-radius:13px;background:linear-gradient(110deg,#162638,#172c37)}
+.demo-journey-footer>div:first-child{display:grid;gap:2px}.demo-journey-footer strong{font-size:14px;color:#ecf4fa}.demo-journey-footer small{font-size:11px;color:#a4bfcc}.demo-journey-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.demo-journey-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:39px;padding:9px 13px;border:1px solid #617c90;border-radius:9px;background:#203a4a;color:#d8f8fb;text-decoration:none;font-size:12px;font-weight:800;text-align:center}
+.demo-journey-actions a:last-child{background:#b4e5dd;color:#18343b;border-color:#b4e5dd}.demo-journey-actions a:hover{filter:brightness(1.1)}
+@media(max-width:650px){.demo-journey-footer{padding:13px;align-items:stretch;flex-direction:column;gap:12px}.demo-journey-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.demo-journey-actions a{min-height:44px;padding:9px 6px;font-size:11px}}
