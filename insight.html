@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f6f7fb">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>無名S note INSIGHT｜noteの通知・交流を、もっと整理しやすく</title>
+  <meta name="description" content="スキ・コメント・フォロー・本人通知、あとから探すのは大変。無名S note INSIGHTの役立つ場面、無料で触れる体験デモ、加入前に知りたいこと、参加方法を1ページにまとめました。">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="無名S note INSIGHT｜noteの通知に追われるあなたへ">
+  <meta property="og:description" content="何ができる？どう使う？まず架空データの無料デモで操作してみよう。">
+  <meta property="og:url" content="https://mumei-s.github.io/insight-guide/insight.html">
+  <meta property="og:image" content="https://mumei-s.github.io/insight-guide/media/og-insight-chibi-v9.png">
+  <meta property="og:image:width" content="1732">
+  <meta property="og:image:height" content="908">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://mumei-s.github.io/insight-guide/media/og-insight-chibi-v9.png">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <style>
+    :root{color-scheme:light;--bg:#f7f7fa;--panel:#fff;--ink:#1b2334;--sub:#555e70;--line:#e4e4ed;--violet:#5851a6;--violet2:#eeecff;--teal:#316a68;--shadow:0 12px 42px #24264d0b}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:78px}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:15px;line-height:1.8;text-wrap:pretty}a{color:inherit;text-decoration:none}a:focus-visible,summary:focus-visible{outline:3px solid #7d72df;outline-offset:4px;border-radius:8px}h1,h2,h3,p{margin-top:0}img{display:block;max-width:100%;height:auto}small{font-size:12px}section{scroll-margin-top:78px}.wrap{width:min(1070px,calc(100% - 38px));margin-inline:auto}
+    .top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--panel) 92%,transparent);border-bottom:1px solid var(--line);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}.topin{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px}.logo{display:flex;align-items:baseline;gap:7px;color:var(--violet);font-weight:900;font-size:21px;letter-spacing:-.035em}.logo small{color:var(--sub);font-weight:600;font-size:10px;letter-spacing:.07em}.topnav{display:flex;align-items:center;gap:10px}.topnav a{font-weight:750;font-size:12px;padding:8px 11px;border-radius:999px}.topnav a:last-child{background:var(--ink);color:#fff}.topnav a:hover{background:var(--violet2);color:var(--violet)}.topnav a:last-child:hover{background:var(--violet);color:#fff}
+    .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse at 83% 15%,#e1e7ff 0,transparent 48%),radial-gradient(ellipse at 16% 84%,#e4f4ed 0,transparent 42%),linear-gradient(155deg,#fff 0%,#f5f4ff 100%)}.heroin{padding:72px 0 68px;display:grid;grid-template-columns:1.04fr .96fr;align-items:center;gap:36px}.eyebrow{font-size:12px;font-weight:850;letter-spacing:.14em;color:var(--violet);text-transform:uppercase}.hero h1{font-size:clamp(33px,4.2vw,56px);font-weight:900;letter-spacing:-.06em;line-height:1.32;margin:19px 0 23px}.hero h1 em{font-style:normal;color:var(--violet);background:linear-gradient(transparent 74%,#dce0ff 74%)}.lead{font-size:16px;color:var(--sub);max-width:560px;line-height:2}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:29px}.btn{display:inline-flex;align-items:center;justify-content:center;text-align:center;gap:6px;min-height:50px;padding:11px 21px;border:1px solid var(--ink);border-radius:14px;font-size:14px;line-height:1.5;font-weight:850;transition:transform .15s ease,background .15s ease}.btn:hover{transform:translateY(-2px)}.btn.primary{background:var(--ink);color:#fff}.btn.primary:hover{background:var(--violet);border-color:var(--violet)}.btn.ghost{background:#ffffffad;color:var(--ink);border-color:#c9cad6}.btn.ghost:hover{border-color:var(--violet)}.micro{color:var(--sub);font-size:12px;margin:15px 0 0}.micro strong{color:var(--teal)}
+    .window{position:relative;padding:18px;border-radius:25px;background:#1c2237;box-shadow:0 30px 75px #34345a25,0 4px 12px #1c22401e;transform:rotate(-1deg)}.window:before{content:"";position:absolute;inset:-13px -8px auto auto;width:110px;height:110px;border-radius:50%;background:#bac5ff;filter:blur(34px);z-index:-1}.windowbar{display:flex;align-items:center;gap:6px;padding-bottom:16px}.dot{width:8px;height:8px;border-radius:50%;background:#6a718a}.dot:first-child{background:#f1b6ba}.dot:nth-child(2){background:#f5dfa8}.dot:nth-child(3){background:#b7e6c7}.windowbar strong{font-size:11px;letter-spacing:.12em;color:#dae1fa;margin-left:auto}.screen{background:#f9fafc;border-radius:14px;padding:17px;color:#1e2b39}.screen h2{font-size:19px;letter-spacing:-.04em;margin:0 0 4px}.screen>p{font-size:11px;color:#687589;margin:0 0 12px}.screenrow{display:grid;grid-template-columns:37px 1fr auto;gap:10px;align-items:center;padding:11px 4px;border-top:1px solid #e3e8ee}.bubble{width:35px;height:35px;border-radius:12px;display:grid;place-items:center;font-weight:800;color:#456f7b;background:#d8eff2}.screenrow:nth-child(3) .bubble{background:#f1e3fa;color:#865398}.screenrow:nth-child(4) .bubble{background:#f7edcf;color:#7f6c36}.screenrow strong{font-size:12px;display:block}.screenrow small{display:block;line-height:1.4;font-size:10px;color:#687589}.screenrow b{font-size:10px;background:#eaf0fa;color:#465c7c;border-radius:8px;padding:5px 7px}.visualnote{font-size:10px;color:#adb6cb;text-align:right;padding:9px 0 0}
+    .section{padding:74px 0}.sectionhead{margin-bottom:29px}.sectionhead .eyebrow{margin-bottom:10px}.sectionhead h2{font-size:clamp(25px,3vw,35px);letter-spacing:-.045em;line-height:1.45;margin-bottom:10px}.sectionhead p{max-width:720px;color:var(--sub);font-size:14px}.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.feature{background:var(--panel);border:1px solid var(--line);border-radius:19px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px}.feature .glyph{display:grid;place-items:center;width:43px;height:43px;font-size:21px;border-radius:14px;background:var(--violet2)}.feature h3{font-size:17px;line-height:1.5;letter-spacing:-.025em;margin:0}.feature p{font-size:13px;line-height:1.85;color:var(--sub);margin:0;flex:1}.feature a{font-size:13px;font-weight:850;color:var(--violet);padding-top:6px}.feature a:hover{text-decoration:underline}
+    .how{background:var(--panel);border-block:1px solid var(--line)}.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.step{position:relative;border:1px solid var(--line);border-radius:18px;padding:21px;background:var(--bg)}.stepnum{font-weight:900;color:var(--violet);letter-spacing:.12em;font-size:12px}.step h3{font-size:17px;margin:12px 0 7px}.step p{color:var(--sub);font-size:13px;line-height:1.8;margin-bottom:0}.step a{color:var(--violet);text-decoration:underline;text-underline-offset:3px}
+    .pricing{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}.plan{border:1px solid var(--line);border-radius:22px;padding:27px;background:var(--panel);box-shadow:var(--shadow)}.plan .eyebrow{margin-bottom:9px}.plan h3{font-size:22px;margin:0 0 7px}.prices{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin:14px 0}.prices strong{font-size:29px;letter-spacing:-.04em}.prices span{color:var(--sub);font-size:12px}.plan p{color:var(--sub);font-size:13px;line-height:1.9}.plan .btn{margin-top:9px}.checklist{list-style:none;margin:0;padding:0;display:grid;gap:10px}.checklist li{padding-left:24px;position:relative;font-size:13px;color:var(--sub)}.checklist li:before{content:"✓";position:absolute;left:0;top:0;color:var(--teal);font-weight:900}.notice{margin-top:17px;padding:15px 17px;border:1px solid var(--line);border-radius:13px;background:var(--bg);font-size:12px;line-height:1.8;color:var(--sub)}.notice strong{color:var(--ink)}
+    .faq{max-width:850px}.faq details{border-bottom:1px solid var(--line);padding:5px 0}.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;list-style:none;font-weight:800;font-size:15px;cursor:pointer}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"＋";font-weight:400;font-size:22px;color:var(--violet)}.faq details[open] summary:after{content:"−"}.faq details p{color:var(--sub);font-size:13px;line-height:2;padding-right:24px;margin:0 0 20px}
+    .finish{border-top:1px solid var(--line);background:linear-gradient(130deg,#e6e6ff,#e9f4f1)}.finishin{display:flex;justify-content:space-between;align-items:center;gap:23px;padding:38px 0}.finish h2{font-size:24px;line-height:1.5;margin:0 0 8px}.finish p{font-size:13px;color:var(--sub);margin:0}.finish .actions{margin-top:0;flex-shrink:0}.foot{padding:30px 0 45px;font-size:12px;color:var(--sub)}.footin{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.foot a{text-decoration:underline;text-underline-offset:3px}
+    @media(max-width:780px){.heroin{grid-template-columns:1fr;gap:30px;padding:49px 0 42px}.hero h1{font-size:clamp(31px,8vw,45px)}.window{max-width:510px;width:100%;margin:0 auto;transform:none}.features{grid-template-columns:1fr 1fr}.pricing{grid-template-columns:1fr}.finishin{display:block}.finish .actions{margin-top:18px}}
+    @media(max-width:520px){.wrap{width:calc(100% - 30px)}.topin{min-height:57px}.logo{font-size:18px}.logo small{display:none}.topnav{gap:3px}.topnav a{font-size:11px;padding:7px 9px}.hero h1{font-size:35px}.lead{font-size:14px}.actions .btn{width:100%}.micro{font-size:11px}.section{padding:51px 0}.features,.steps{grid-template-columns:1fr}.feature{padding:20px}.step{padding:18px}.sectionhead{margin-bottom:22px}.sectionhead h2{font-size:27px}.screen{padding:13px}.window{padding:13px}.plan{padding:22px}.finishin{padding:34px 0}.finish h2{font-size:23px}}
+    @media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#111722;--panel:#1b2432;--ink:#f3f5ff;--sub:#b8c3d1;--line:#354153;--violet:#bbb5ff;--violet2:#353250;--teal:#a4dad1;--shadow:0 12px 42px #0003}.hero{background:radial-gradient(ellipse at 86% 16%,#342e52,transparent 50%),radial-gradient(ellipse at 15% 84%,#203d40,transparent 40%),linear-gradient(140deg,#111723,#192232)}.hero h1 em{background:linear-gradient(transparent 74%,#4b4376 74%)}.topnav a:last-child,.btn.primary{background:#e7e6ff;color:#1d2432;border-color:#e7e6ff}.topnav a:last-child:hover,.btn.primary:hover{background:#bcb3ff;color:#141827}.btn.ghost{background:#263141;color:var(--ink);border-color:#66758e}.window{background:#29273d}.screen{background:#e9edf4;color:#1e2b39}.step{background:var(--bg)}.finish{background:linear-gradient(130deg,#262944,#213b3c)}.feature .glyph{background:#343150}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}.btn:hover{transform:none}}
+  </style>
+</head>
+<body>
+  <header class="top"><div class="wrap topin">
+    <a class="logo" href="./insight.html" aria-label="無名S note INSIGHTの利用案内">INSIGHT <small>by 無名S note</small></a>
+    <nav class="topnav" aria-label="ページ内案内"><a href="#features">できること</a><a href="#start">始め方</a><a href="#plans">プラン確認</a></nav>
+  </div></header>
+  <main>
+    <section class="hero"><div class="wrap heroin">
+      <div>
+        <div class="eyebrow">FOR NOTE CREATORS / INSIGHT</div>
+        <h1>noteの通知、<br><em>追いかけるだけ</em>で<br>終わらせない。</h1>
+        <p class="lead">スキをくれた人。コメントでつながった人。フォローの変化。<br>流れていく反応を、あとから見返しやすく。<strong>INSIGHT</strong>は、noteでの交流と分析を整理するためのツールです。</p>
+        <div class="actions"><a class="btn primary" href="./#notifications" target="_blank" rel="noopener noreferrer">まず無料デモを触る <span aria-hidden="true">↗</span></a><a class="btn ghost" href="#plans">料金・参加方法を見る <span aria-hidden="true">↓</span></a></div>
+        <p class="micro"><strong>デモは登録不要</strong>・架空データのみ。実際のアカウントには接続しません。</p>
+      </div>
+      <div class="window" role="img" aria-label="架空の通知履歴を表示したINSIGHTの機能イメージ。実際のデモはリンク先から操作できます。">
+        <div class="windowbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><strong>INSIGHT / EXAMPLE</strong></div>
+        <div class="screen"><h2>誰からの反応だったっけ？</h2><p>通知を振り返るイメージ · 表示内容は架空です</p>
+          <div class="screenrow"><span class="bubble">♥</span><span><strong>スキの履歴</strong><small>反応してくれた人を見返す</small></span><b>履歴</b></div>
+          <div class="screenrow"><span class="bubble">✎</span><span><strong>コメント</strong><small>会話と対応状況を整理</small></span><b>交流</b></div>
+          <div class="screenrow"><span class="bubble">◈</span><span><strong>フォローの変化</strong><small>取得できた履歴を照合</small></span><b>確認</b></div>
+        </div>
+        <div class="visualnote">IMAGE ONLY · 機能画面は無料デモで確認できます</div>
+      </div>
+    </div></section>
+
+    <section id="features" class="section"><div class="wrap">
+      <div class="sectionhead"><div class="eyebrow">YOUR EVERYDAY NOTE</div><h2>こんなとき、INSIGHTが役立ちます。</h2><p>機能名ではなく、普段の困りごとから。気になる項目を押すと、その機能の体験デモが新しいタブで開きます。</p></div>
+      <div class="features">
+        <article class="feature"><span class="glyph" aria-hidden="true">🔔</span><h3>通知が多くて追えない</h3><p>取得できた本人通知を種類別に整理し、必要な履歴や対応状況を確認します。</p><a href="./#notifications" target="_blank" rel="noopener noreferrer">本人通知を体験する ↗</a></article>
+        <article class="feature"><span class="glyph" aria-hidden="true">♡</span><h3>誰がスキをくれた？</h3><p>スキの履歴と順位を見比べ、日々の交流を振り返るきっかけに。</p><a href="./#likes" target="_blank" rel="noopener noreferrer">スキ履歴を体験する ↗</a></article>
+        <article class="feature"><span class="glyph" aria-hidden="true">✎</span><h3>コメントの返信を整理したい</h3><p>コメントや会話のまとまりを見ながら、やりとりを探しやすくします。</p><a href="./#comments" target="_blank" rel="noopener noreferrer">コメントを体験する ↗</a></article>
+        <article class="feature"><span class="glyph" aria-hidden="true">◈</span><h3>フォローの変化が気になる</h3><p>保存した記録を照合し、確定・候補・未確認を区別。判定できないものを断定しません。</p><a href="./#social" target="_blank" rel="noopener noreferrer">フォローを体験する ↗</a></article>
+        <article class="feature"><span class="glyph" aria-hidden="true">▤</span><h3>記事やマガジンを見直したい</h3><p>記事・マガジン・お気に入りなど、複数の切り口から振り返れます。</p><a href="./#magazines" target="_blank" rel="noopener noreferrer">マガジンを体験する ↗</a></article>
+        <article class="feature"><span class="glyph" aria-hidden="true">▥</span><h3>数字もきちんと見たい</h3><p>履歴だけでなく、分析画面を使って活動の変化を把握するヒントに。</p><a href="./#analysis" target="_blank" rel="noopener noreferrer">分析画面を体験する ↗</a></article>
+      </div>
+    </div></section>
+
+    <section id="start" class="section how"><div class="wrap">
+      <div class="sectionhead"><div class="eyebrow">HOW TO START</div><h2>まず触って、納得してから。</h2><p>いきなり支払う必要はありません。画面を確認して、自分の使い方に合うかを判断できます。</p></div>
+      <div class="steps">
+        <div class="step"><div class="stepnum">01 · FREE</div><h3>無料の操作デモを試す</h3><p><a href="./" target="_blank" rel="noopener noreferrer">体験デモ</a>では架空のデータだけを使用。noteへのログインや連携は不要です。</p></div>
+        <div class="step"><div class="stepnum">02 · CHECK</div><h3>プランと利用条件を確認</h3><p><a href="https://note.com/ss_yr/membership" target="_blank" rel="noopener noreferrer">noteのメンバーシップ画面</a>で、現在募集中のINSIGHTプランと特典を確認してください。</p></div>
+        <div class="step"><div class="stepnum">03 · SETUP</div><h3>参加後に導入案内へ</h3><p>参加者向けの案内から利用準備を行います。ブラウザ・端末ごとに必要な設定が異なる場合があります。</p></div>
+      </div>
+      <div class="notice"><strong>先に知っておいてほしいこと：</strong>デモは本体と独立しています。本体は現在も改善が続いており、読取可能な範囲・ブラウザ対応・一部機能の動作は環境によって異なります。過去の通知すべての復元、完全なリアルタイム取得、収益やフォロワー増加は保証しません。</div>
+    </div></section>
+
+    <section id="plans" class="section"><div class="wrap">
+      <div class="sectionhead"><div class="eyebrow">MEMBERSHIP</div><h2>使いたいと思ったら、ここから。</h2><p>INSIGHTは無名S noteのメンバーシップで案内しています。価格と特典はnote側の最新表示を優先してください。</p></div>
+      <div class="pricing">
+        <div class="plan">
+          <div class="eyebrow">INSIGHT MEMBERSHIP</div>
+          <h3>noteのプランから参加</h3>
+          <div class="prices"><strong>月額250円・350円</strong><span>のINSIGHTプランを確認済み</span></div>
+          <p>2026年11月2日の公開プロフィール上の掲載情報です。第2期・第3期で価格が異なるため、現在の募集状況・対象特典・利用条件を必ず確認してください。</p>
+          <a class="btn primary" href="https://note.com/ss_yr/membership" target="_blank" rel="noopener noreferrer">noteでプランを確認する ↗</a>
+          <p class="micro">参加手続きはnoteのWebブラウザ版で。アプリ内では加入手続きができない場合があります。</p>
+        </div>
+        <div class="plan">
+          <h3>参加前のチェック</h3>
+          <ul class="checklist">
+            <li>気になる画面を無料デモで操作できた</li>
+            <li>プランの料金と特典・募集条件を確認した</li>
+            <li>利用するスマートフォンやPC・ブラウザの導入条件を理解した</li>
+            <li>本体が改善中であること、取得データに限界があることを理解した</li>
+          </ul>
+          <div class="notice">「自分の端末で使えるか分からない」「どのプランを選べばよいか分からない」という場合は、<a href="https://note.com/ss_yr" target="_blank" rel="noopener noreferrer" style="color:var(--violet);text-decoration:underline">無名S noteのプロフィール</a>から事前に相談してください。</div>
+        </div>
+      </div>
+    </div></section>
+
+    <section id="faq" class="section how"><div class="wrap">
+      <div class="sectionhead"><div class="eyebrow">BEFORE YOU JOIN</div><h2>よくある疑問。</h2></div>
+      <div class="faq">
+        <details><summary>無料で試せますか？</summary><p>はい。公開している操作デモは登録不要・無料です。表示されるアカウントや通知、記事、数値は架空データで、実際のnoteアカウントには接続しません。本体の利用条件とは別です。</p></details>
+        <details><summary>note公式のツールですか？</summary><p>いいえ。INSIGHTは無名S noteによる独立したツールです。note公式の提供・認定サービスではありません。</p></details>
+        <details><summary>スマホでも使えますか？</summary><p>体験デモはスマートフォンから開けます。本体はAndroid・iOS・PCや使用するブラウザ／拡張の条件が異なり、環境によって利用できない機能があります。加入前に自分の端末での導入方法を確認してください。</p></details>
+        <details><summary>消えた過去の通知もすべて分かりますか？</summary><p>いいえ。取得・保存できた範囲から照合します。未取得の期間や不明な相手まで断定することはできません。公式の集計値と履歴の人数・件数が一致しない場合もあります。</p></details>
+        <details><summary>第2期と第3期、どちらに入ればいい？</summary><p>募集期と価格が異なります。プラン名だけでは特典の違いが伝わりにくいため、note側の最新の特典説明・募集状況を確認してください。不明な場合は加入前に運営者へ確認してください。</p></details>
+        <details><summary>メンバーシップへの参加はどこから？</summary><p><a href="https://note.com/ss_yr/membership" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;color:var(--violet)">無名S noteのメンバーシップページ</a>をブラウザで開き、INSIGHTのプランを確認してください。noteアプリでは加入の設定ができないため、スマホの場合もブラウザで手続きします。</p></details>
+      </div>
+    </div></section>
+
+    <section class="finish"><div class="wrap finishin"><div><h2>画面を触ると、使い道が見えてくる。</h2><p>まずは無料デモから。加入の判断は、そのあとで大丈夫です。</p></div><div class="actions"><a class="btn ghost" href="./" target="_blank" rel="noopener noreferrer">無料デモへ ↗</a><a class="btn primary" href="https://note.com/ss_yr/membership" target="_blank" rel="noopener noreferrer">プランを見る ↗</a></div></div></section>
+  </main>
+  <footer class="foot"><div class="wrap footin"><span>© 無名S note · INSIGHTは非公式の独立したツールです。</span><span><a href="./">操作デモ</a>　·　<a href="https://note.com/ss_yr" target="_blank" rel="noopener noreferrer">noteプロフィール</a></span></div></footer>
+</body>
+</html>
