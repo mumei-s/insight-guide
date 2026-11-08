@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja" data-theme="system">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+ <title>KEIHI｜領収証から、経費帳へ。</title>
+ <meta name="description" content="領収証を端末内で読み取り。蛍光マーカー・値引き・家事按分に対応する、小さな経費帳。">
+ <meta name="theme-color" content="#173e36"><meta name="color-scheme" content="light dark">
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
+ <link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon.svg"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./styles.css">
+ <script type="module" src="./app.js"></script>
+</head>
+<body>
+ <svg class="icon-defs" aria-hidden="true"><defs>
+  <symbol id="i-scan" viewBox="0 0 24 24"><path d="M8 3H4a1 1 0 0 0-1 1v4m13-5h4a1 1 0 0 1 1 1v4M3 16v4a1 1 0 0 0 1 1h4m13-5v4a1 1 0 0 1-1 1h-4M7 8h10M7 12h10M7 16h6"/></symbol>
+  <symbol id="i-ledger" viewBox="0 0 24 24"><rect x="5" y="3" width="15" height="18" rx="2"/><path d="M9 3v18M3 7h4m-4 5h4m-4 5h4m5-10h5m-5 5h5m-5 5h3"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 3v17h17M9 15V9m5 6V4m5 11v-5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h9m4 0h3M4 17h3m4 0h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M8 5l1-2h6l1 2h4a1 1 0 0 1 1 1v13H3V6a1 1 0 0 1 1-1Z"/><circle cx="12" cy="12" r="4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H4m6-6-6 6 6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 6V4h7l2 3h9v13H3V6Z"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="m4 15 11-11 5 5L9 20H4v-5Zm9-9 5 5"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M6 6l1 15h10l1-15M10 10v7m4-7v7"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2-3 5m0 3v.2"/></symbol>
+ </defs></svg>
+ <aside class="rail">
+  <a class="brand" href="#scan" aria-label="KEIHI ホーム"><span class="brand-mark">K<span>.</span></span><span>KEIHI<small>EXPENSE BOOK</small></span></a>
+  <div class="rail-label">WORKSPACE</div>
+  <nav class="main-nav" aria-label="メインメニュー">
+   <button data-view="scan" class="nav-item active"><svg><use href="#i-scan"/></svg><span>読み取り</span></button>
+   <button data-view="ledger" class="nav-item"><svg><use href="#i-ledger"/></svg><span>経費帳</span><span id="nav-count" class="nav-count">0</span></button>
+   <button data-view="reports" class="nav-item"><svg><use href="#i-chart"/></svg><span>集計</span></button>
+   <button data-view="settings" class="nav-item"><svg><use href="#i-settings"/></svg><span>設定・按分</span></button>
+  </nav>
+  <div class="rail-bottom"><button class="text-button help-button" data-action="help"><svg><use href="#i-help"/></svg>使い方</button><div class="local-seal"><svg><use href="#i-shield"/></svg><div>あなたの端末内で完結<small>画像の送信・保存なし</small></div></div><span class="version">KEIHI / 1.0</span></div>
+ </aside>
+ <div class="app-shell">
+  <header class="topbar"><div class="mobile-brand">K<span>.</span><b>KEIHI</b></div><div class="breadcrumb">個人事業の経費管理<span>/</span><b id="view-label">読み取り</b></div><div class="top-actions"><span class="local-dot">端末内処理</span><label class="year-picker"><select id="year-select" aria-label="集計する年分"></select><span>年分</span></label><button class="icon-button" data-action="help" aria-label="使い方"><svg><use href="#i-help"/></svg></button></div></header>
+  <main id="main" tabindex="-1">
+   <section id="scan-view" class="view active" aria-label="領収証の読み取り">
+    <div class="page-heading"><div><div class="eyebrow">RECEIPT WORKSPACE</div><h1>領収証から、経費帳へ。</h1><p>仕事の支出だけを拾って、ひとつずつ整える。</p></div><button class="button subtle" id="manual-button"><svg><use href="#i-plus"/></svg>手入力</button></div>
+    <div class="overview-strip"><div><span id="overview-year">2026年分の経費計上額</span><strong id="overview-total">¥0</strong></div><div><span>登録済み</span><strong><b id="overview-count">0</b><small>枚</small></strong></div><div class="overview-detail"><span>画像は残さず</span><strong class="small-strong">明細だけ、軽く。</strong></div><button class="strip-link" data-view="reports">集計を見る <svg><use href="#i-arrow"/></svg></button></div>
+    <div id="scanner-home">
+     <div class="scan-grid"><div class="intake-panel">
+      <div class="panel-kicker"><span class="step-number">01</span> 領収証を読み取る<span class="tiny-tag">ON DEVICE</span></div>
+      <div class="drop-zone" id="drop-zone"><div class="scan-corners"><svg class="receipt-art" viewBox="0 0 180 180" aria-hidden="true"><path class="paper" d="M48 16h84v146l-10-5-10 5-11-5-11 5-10-5-11 5-10-5-11 5Z"/><path class="ink" d="M66 39h47m-42 7h37M63 69h55m-55 18h55m-55 18h55m-55 20h55"/><path class="marker" d="M60 84h61"/><path class="ink heavy" d="M93 139h25"/><path class="scanline" d="M27 58h126M27 53v10m126-10v10"/></svg></div><h2>撮って、選んで、読み取る。</h2><p>1枚ずつでも、まとめてでも。</p><button class="button primary large" id="camera-button"><svg><use href="#i-camera"/></svg>領収証を撮影</button><button class="text-button file-choice" id="photo-button"><svg><use href="#i-folder"/></svg>写真を選ぶ<span>複数選択可</span></button><span class="drop-hint">JPEG / PNG / WebP · ここにドラッグもできます</span></div>
+      <div class="intake-footer"><svg><use href="#i-shield"/></svg><span>読取中の写真は一時的に表示。登録・終了時に破棄します。</span></div>
+     </div><aside class="workflow-panel"><div class="eyebrow">SMALL DETAILS, DONE RIGHT</div><h2>混ざっていても、<br>必要な分だけ。</h2><div class="feature-row"><span class="feature-symbol marker-symbol"></span><div><h3>マーカーで対象を選ぶ</h3><p>蛍光色があれば、色の付いた商品行を優先して選択。あとから変更できます。</p></div></div><div class="feature-row"><span class="feature-symbol discount-symbol">−</span><div><h3>下の値引きも拾う</h3><p>商品直下の値引きを関連付け。会計全体のクーポンは、家庭用品も含めて配分。</p></div></div><div class="feature-row"><span class="feature-symbol ratio-symbol">%</span><div><h3>仕事の割合で計算</h3><p>家賃・通信費・車両費などの按分率を登録。商品ごとの変更にも対応。</p></div></div><button class="sample-button" id="sample-button">サンプルで操作を試す<svg><use href="#i-arrow"/></svg></button><p class="fine-print">読み取り後は紙と照合して確定します。紙の原本はお手元で保管してください。</p></aside></div>
+     <div class="recent-section"><div class="section-heading"><h2>最近登録した領収証</h2><button class="text-button" data-view="ledger">経費帳を開く <svg><use href="#i-arrow"/></svg></button></div><div id="recent-list"></div></div>
+    </div>
+    <div id="workbench" hidden></div>
+   </section>
+   <section id="ledger-view" class="view" aria-label="経費帳"></section>
+   <section id="reports-view" class="view" aria-label="経費の集計"></section>
+   <section id="settings-view" class="view" aria-label="設定と家事按分"></section>
+  </main>
+  <footer class="app-footer"><span>KEIHI — A little order, for your business.</span><span id="storage-status">画像保存なし · 明細のみ保存</span></footer>
+ </div>
+ <nav class="bottom-nav" aria-label="スマートフォン用メニュー"><button data-view="scan" class="active"><svg><use href="#i-scan"/></svg><span>読み取り</span></button><button data-view="ledger"><svg><use href="#i-ledger"/></svg><span>経費帳</span></button><button data-view="reports"><svg><use href="#i-chart"/></svg><span>集計</span></button><button data-view="settings"><svg><use href="#i-settings"/></svg><span>設定・按分</span></button></nav>
+ <input id="camera-input" type="file" accept="image/*" capture="environment" hidden><input id="photo-input" type="file" accept="image/*" multiple hidden><input id="restore-input" type="file" accept="application/json,.json" hidden>
+ <dialog id="dialog"><form method="dialog"><div class="dialog-heading"><h2 id="dialog-title"></h2><button class="icon-button" value="cancel" aria-label="閉じる"><svg><use href="#i-close"/></svg></button></div><div id="dialog-body"></div><div class="dialog-actions" id="dialog-actions"></div></form></dialog>
+ <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+ <div class="fatal-notice" id="fatal-notice" hidden></div>
+</body></html>
