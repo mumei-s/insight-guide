@@ -1,5 +1,5 @@
-import {VERSION,CATEGORIES,DEFAULT_SETTINGS,uid,yen,parseReceipt,calculate,validateDraft,recordFromDraft,draftFromRecord,findDuplicates,summarize,toCSV,summaryCSV,readBackup,ratioValue} from './core.js';
-import {loadPhoto,rotatePhoto,cropPhoto,recognizePhoto,cancelOCR,releaseOCR} from './ocr.js';
+import {VERSION,CATEGORIES,DEFAULT_SETTINGS,uid,yen,parseReceipt,calculate,validateDraft,recordFromDraft,draftFromRecord,findDuplicates,summarize,toCSV,summaryCSV,readBackup,ratioValue} from './core.js?v=20261109-2';
+import {loadPhoto,rotatePhoto,cropPhoto,recognizePhoto,cancelOCR,releaseOCR} from './ocr.js?v=20261109-2';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icon=name=>`<svg aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -50,7 +50,7 @@ async function selectFiles(files){
 async function nextPhoto(){
  clearPhoto();draft=null;sample=false;const file=queue.shift();if(!file){queueTotal=0;queueDone=0;renderWorkbench();return;}
  loadingPhoto=true;renderWorkbench();
- try{const [canvas,buffer]=await Promise.all([loadPhoto(file),file.arrayBuffer()]);photo=canvas;photoHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',buffer)),b=>b.toString(16).padStart(2,'0')).join('');queueDone++;}
+ try{photo=await loadPhoto(file);if(globalThis.crypto?.subtle){try{const buffer=await file.arrayBuffer();photoHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',buffer)),b=>b.toString(16).padStart(2,'0')).join('');}catch{photoHash='';}}queueDone++;}
  catch(e){toast(e.message);queueDone++;}
  finally{loadingPhoto=false;renderWorkbench();if(!photo&&queue.length)await nextPhoto();}
 }

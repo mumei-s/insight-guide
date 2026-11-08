@@ -31,6 +31,10 @@ const totalRe=/^(?:総合計|ご?合計|お買(?:上|い上)(?:げ)?(?:合計|�
 const subtotalRe=/小計|税抜計|税込計|値引前合計|割引前合計|商品合計|SUBTOTAL/i;
 const discountRe=/値引|割引|クーポン|サービス値|特別割|割戻|DISCOUNT|COUPON|OFF/i;
 const paymentRe=/お?預(?:り|かり)|お?釣(?:り|銭)?|釣銭|支払方法|現金|クレジット|電子マネー|ポイント(?:利用|使用|充当|残高|付与|獲得|支払)|利用ポイント|PayPay|残高|お買上点数|買上点数|商品点数|点数合計|領収証|領収書|レシート|お客様|担当|責任者|レジ|会員|登録番号|TEL|電話|住所|営業時間|カード番号|承認番号|取引番号|伝票番号|お問合せ|お問い合せ/i;
+export function receiptTotalAmount(text){
+ const c=compact(text);if(!totalRe.test(c)||subtotalRe.test(c)||discountRe.test(c)||/点数|数量/.test(c))return null;
+ const a=amountAtEnd(text);return a?Math.abs(a.amount):null;
+}
 function extractDate(lines){
  for(const line of lines){const s=normalize(line.text);let m=s.match(/(20\d{2})\s*[年\/.-]\s*(\d{1,2})\s*[月\/.-]\s*(\d{1,2})\s*日?/);if(!m){const r=s.match(/(?:令和|R)\s*(\d{1,2})\s*[年\/.-]\s*(\d{1,2})\s*[月\/.-]\s*(\d{1,2})/i);if(r)m=[r[0],String(2018+Number(r[1])),r[2],r[3]];}if(m){const d=`${m[1]}-${m[2].padStart(2,'0')}-${m[3].padStart(2,'0')}`;if(validDate(d))return d;}}
  return '';
@@ -44,7 +48,7 @@ export function parseReceipt(input,{hasHighlight=false}={}){
  for(const l of lines.slice(0,Math.max(0,firstItemAt<0?6:firstItemAt))){const t=l.text.trim();if(!merchant&&t.length>1&&!/\d{2,}|領収|レシート|登録番号|電話|TEL|年|月|住所|様|^-+$/.test(t))merchant=t;}
  for(const line of lines){
   const text=line.text.trim(),c=compact(text),a=amountAtEnd(text);if(!c)continue;
-  if(totalRe.test(c)&&!subtotalRe.test(c)&&!discountRe.test(c)){if(a){declaredTotal=Math.abs(a.amount);totalSeen=true;}lastItem=null;continue;}
+  if(totalRe.test(c)&&!subtotalRe.test(c)&&!discountRe.test(c)&&!/点数|数量/.test(c)){const total=receiptTotalAmount(text);if(total!==null){declaredTotal=total;totalSeen=true;if((line.confidence??100)<78)warnings.push('支払総額の文字が不鮮明です。紙の合計金額と照合してください。');}lastItem=null;continue;}
   if(subtotalRe.test(c)){subtotalSeen=true;lastItem=null;continue;}
   if(/^(?:\(?内\)?)?(?:外税|内税|消費税(?:額)?|税額|税率)|^(?:8|10)%.*(?:対象|税|計)|^非課税対象|^軽減税率対象/.test(c)&&!discountRe.test(c)){
     // Tax totals are information, never another purchased item.

@@ -1,3 +1,4 @@
+import {receiptTotalAmount} from './core.js?v=20261109-2';
 let worker=null,loading=null,activeRun=0,workerGeneration=0,progressCallback=()=>{};
 const asset=path=>new URL(path,import.meta.url).href;
 export function isMarkerPixel(r,g,b){
@@ -57,13 +58,34 @@ export async function recognizePhoto(canvas,onProgress=()=>{}){
  let data,extraLines=[];
  try{
   ({data}=await worker.recognize(processed.canvas,{}, {text:true,blocks:true}));
-  if(!/(?:合計|総額|ご利用金額|お支払金額)[^\n]*\d/.test(data.text.replace(/[ \t]/g,''))&&!isCancelled()){
+  if(!data.text.split('\n').some(t=>receiptTotalAmount(t)!==null)&&!isCancelled()){
    // Rules/bold print can hide the total in a single-block pass. Read the lower
    // original image again; only total metadata is merged, never extra purchases.
    onProgress({label:'支払総額を追加で確認しています',progress:null});
    const lower=document.createElement('canvas'),top=Math.floor(canvas.height*0.4);lower.width=canvas.width;lower.height=canvas.height-top;lower.getContext('2d').drawImage(canvas,0,top,canvas.width,lower.height,0,0,lower.width,lower.height);
-   try{await worker.setParameters({tessedit_pageseg_mode:'11'});const extra=await worker.recognize(lower,{}, {text:true,blocks:true});extraLines=groupOCRRows((extra.data.blocks||[]).flatMap(b=>(b.paragraphs||[]).flatMap(p=>p.lines||[]))).filter(l=>/^(?:合\s*計|総合計|総額|ご利用金額|お支払|お買上)/.test(l.text.trim())&&/\d/.test(l.text)).map(l=>({...l,bbox:{...l.bbox,y0:l.bbox.y0+top,y1:l.bbox.y1+top}}));}
-   finally{lower.width=lower.height=1;if(worker&&!isCancelled())await worker.setParameters({tessedit_pageseg_mode:'6'});}
+   try{
+    await worker.setParameters({tessedit_pageseg_mode:'11'});const extra=await worker.recognize(lower,{}, {text:true,blocks:true});
+    const rows=groupOCRRows((extra.data.blocks||[]).flatMap(b=>(b.paragraphs||[]).flatMap(p=>p.lines||[])));
+    const found=rows.filter(l=>receiptTotalAmount(l.text)!==null);
+    // Sparse OCR can split bold Japanese glyphs vertically. Re-read a few
+    // isolated cash-amount rows at double size, accepting only an actual total
+    // label; a subtotal or an unlabelled number is never promoted to a total.
+    if(!found.length&&!isCancelled()){
+     const subtotal=rows.filter(l=>/小\s*計|SUBTOTAL/i.test(l.text)).at(-1);
+     const candidates=rows.filter(l=>(!subtotal||l.bbox.y0>subtotal.bbox.y1)&&/[\d０-９]/.test(l.text)&&!/税|預|釣|値引|割引|クーポン|ポイント|現金|点数|数量|小\s*計|cash|tax|discount|coupon/i.test(l.text)).slice(-4);
+     await worker.setParameters({tessedit_pageseg_mode:'7'});
+     for(const row of candidates){
+      if(isCancelled())break;
+      const pad=Math.max(10,(row.bbox.y1-row.bbox.y0)*0.7),y0=Math.max(0,Math.floor(row.bbox.y0-pad)),y1=Math.min(lower.height,Math.ceil(row.bbox.y1+pad));
+      const scale=Math.min(2,2400/lower.width),strip=document.createElement('canvas');strip.width=Math.round(lower.width*scale);strip.height=Math.round((y1-y0)*scale);strip.getContext('2d').drawImage(lower,0,y0,lower.width,y1-y0,0,0,strip.width,strip.height);
+      try{const single=await worker.recognize(strip,{}, {text:true,blocks:true});if(receiptTotalAmount(single.data.text)!==null){found.push({text:single.data.text.trim(),confidence:single.data.confidence,bbox:{x0:row.bbox.x0,x1:row.bbox.x1,y0,y1}});break;}}
+      finally{strip.width=strip.height=1;}
+     }
+    }
+    extraLines=found.map(l=>({...l,bbox:{...l.bbox,y0:l.bbox.y0+top,y1:l.bbox.y1+top}}));
+   }
+   catch(error){if(isCancelled())throw error;}
+   finally{lower.width=lower.height=1;if(worker&&!isCancelled())await worker.setParameters({tessedit_pageseg_mode:'6'}).catch(()=>{});}
   }
  }catch(e){if(isCancelled())throw Error('読み取りを中止しました。');throw Error('読み取りに失敗しました。写真の向きや明るさを確認して再実行してください。');}
  finally{processed.canvas.width=processed.canvas.height=1;}

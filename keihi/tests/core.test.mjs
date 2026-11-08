@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseReceipt,calculate,roundRatio,apportion,validateDraft,recordFromDraft,readBackup,toCSV,summarize,findDuplicates,DEFAULT_SETTINGS} from '../core.js';
+import {parseReceipt,calculate,roundRatio,apportion,validateDraft,recordFromDraft,readBackup,toCSV,summarize,findDuplicates,DEFAULT_SETTINGS,receiptTotalAmount} from '../core.js';
 import {isMarkerPixel,markerCoverage,groupOCRRows} from '../ocr.js';
 const fixture=()=>parseReceipt([{text:'くらしと仕事の店'},{text:'2026年11月08日'},{text:'作業用手袋 1,980',marked:true},{text:'クーポン値引 -200'},{text:'ノート 680',marked:true},{text:'食材 498'},{text:'家庭用洗剤 1,250'},{text:'小計 4,208'},{text:'会計クーポン -100'},{text:'合計 4,108'}],{hasHighlight:true});
 function ready(d){d.category='消耗品費';d.acknowledged=true;return d;}
@@ -28,3 +28,7 @@ test('Japanese long vowels survive normalization and unsigned coupon is a discou
 test('product names containing 税 do not become tax total lines',()=>{const d=parseReceipt(['書店','2026/11/08','税務の本 1000','合計 1000']);assert.equal(d.items.length,1);});
 test('editing an older record preserves its rounding rule',()=>{const d=ready(fixture());d.ratio=50;d.items[0].amount=1981;d.declaredTotal=4109;d.rounding='floor';const r=recordFromDraft(d,{...DEFAULT_SETTINGS,rounding:'ceil'});assert.equal(r.rounding,'floor');assert.equal(r.expense,calculate(d,{rounding:'floor'}).expense);});
 test('sparse OCR totals reunite the label and amount by their row positions',()=>{const l=groupOCRRows([{text:'合計\n',bbox:{x0:40,y0:100,x1:80,y1:125}},{text:'4,108\n',bbox:{x0:400,y0:104,x1:470,y1:129}},{text:'内消費税',bbox:{x0:40,y0:150,x1:120,y1:175}}]);assert.equal(l.length,2);assert.equal(l[0].text,'合計 4,108');assert.equal(parseReceipt(['ノート 4108',l[0].text]).declaredTotal,4108);});
+test('receipt total recovery accepts spaced and full-width total labels and digits',()=>{assert.equal(receiptTotalAmount('合 計 ￥４，１０８'),4108);assert.equal(receiptTotalAmount('お支払い金額 4,108円'),4108);assert.equal(receiptTotalAmount('TOTAL 4108'),4108);});
+test('subtotals, coupons, quantities and bare amounts never become receipt totals',()=>{for(const t of ['小計 4108','商品合計 4208','合計クーポン -100','合計点数 4','合計数量 4','4,108','合計'])assert.equal(receiptTotalAmount(t),null,t);});
+test('item counts after a printed total do not overwrite the monetary total',()=>{assert.equal(parseReceipt(['お店','ノート 100','合計 100','合計点数 1']).declaredTotal,100);});
+test('uncertain total OCR requires a visible review warning',()=>{const d=parseReceipt(['お店','ノート 100',{text:'合計 100',confidence:60}]);assert.ok(d.warnings.some(w=>w.includes('支払総額の文字')));});

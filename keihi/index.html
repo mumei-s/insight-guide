@@ -7,7 +7,7 @@
  <meta name="theme-color" content="#173e36"><meta name="color-scheme" content="light dark">
  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' blob: data:; font-src 'self'; connect-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'none'">
  <link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="./icon.svg"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./styles.css">
- <script type="module" src="./app.js"></script>
+ <script type="module" src="./app.js?v=20261109-2"></script>
 </head>
 <body>
  <svg class="icon-defs" aria-hidden="true"><defs>
@@ -37,7 +37,7 @@
    <button data-view="reports" class="nav-item"><svg><use href="#i-chart"/></svg><span>集計</span></button>
    <button data-view="settings" class="nav-item"><svg><use href="#i-settings"/></svg><span>設定・按分</span></button>
   </nav>
-  <div class="rail-bottom"><button class="text-button help-button" data-action="help"><svg><use href="#i-help"/></svg>使い方</button><div class="local-seal"><svg><use href="#i-shield"/></svg><div>あなたの端末内で完結<small>画像の送信・保存なし</small></div></div><span class="version">KEIHI / 1.0</span></div>
+  <div class="rail-bottom"><button class="text-button help-button" data-action="help"><svg><use href="#i-help"/></svg>使い方</button><div class="local-seal"><svg><use href="#i-shield"/></svg><div>あなたの端末内で完結<small>画像の送信・保存なし</small></div></div><span class="version">KEIHI / 1.0.1</span></div>
  </aside>
  <div class="app-shell">
   <header class="topbar"><div class="mobile-brand">K<span>.</span><b>KEIHI</b></div><div class="breadcrumb">個人事業の経費管理<span>/</span><b id="view-label">読み取り</b></div><div class="top-actions"><span class="local-dot">端末内処理</span><label class="year-picker"><select id="year-select" aria-label="集計する年分"></select><span>年分</span></label><button class="icon-button" data-action="help" aria-label="使い方"><svg><use href="#i-help"/></svg></button></div></header>
